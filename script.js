@@ -1,6 +1,9 @@
+let currentState = [];
+
 
 document.addEventListener('DOMContentLoaded', function() {
-    setupBoard(initialBoardState);
+    currentState = deepCopy(initialBoardState);
+    setupBoard(currentState);
 
     document.getElementById('run-button').addEventListener('click', processCommands);
     document.getElementById('reset-button').addEventListener('click', resetBoard);
@@ -9,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function setupBoard(rows) {
     const board = document.getElementById('peg-solitaire-board');
-    board.innerHTML = ''; // Clear existing board
+    board.innerHTML = '';
 
     rows.forEach((row, rowIndex) => {
         const rowDiv = document.createElement('div');
@@ -37,7 +40,9 @@ function setupBoard(rows) {
 
 
 function resetBoard() {
-    setupBoard(initialBoardState);
+    console.log(initialBoardState);
+    currentState = deepCopy(initialBoardState);
+    setupBoard(currentState);
 }
 
 function processCommands() {
@@ -81,9 +86,9 @@ function isValidMove(startX, startY, pegToDeleteX, pegToDeleteY, endX, endY) {
         return false;
     }
 
-    if (initialBoardState[startX - 1][startY - 1] !== 1 ||
-        initialBoardState[pegToDeleteX - 1][pegToDeleteY - 1] !== 1 ||
-        initialBoardState[endX - 1][endY - 1] !== 0) {
+    if (currentState[startX - 1][startY - 1] !== 1 ||
+        currentState[pegToDeleteX - 1][pegToDeleteY - 1] !== 1 ||
+        currentState[endX - 1][endY - 1] !== 0) {
         console.log("Pegs not valid");
         return false;
     }
@@ -116,22 +121,26 @@ function isIndexValid(x, y) {
 }
 
 function makeMove(startX, startY, pegToDeleteX, pegToDeleteY, endX, endY) {
-    initialBoardState[startX - 1][startY - 1] = 0;
-    initialBoardState[pegToDeleteX - 1][pegToDeleteY - 1] = 0;
+    currentState[startX - 1][startY - 1] = 0;
+    currentState[pegToDeleteX - 1][pegToDeleteY - 1] = 0;
+    currentState[endX - 1][endY - 1] = 1;
 
-    initialBoardState[endX - 1][endY - 1] = 1;
-
-    setupBoard(initialBoardState);
+    setupBoard(currentState);
 }
+
 
 function compareFinalState() {
     for (let i = 0; i < initialBoardState.length; i++) {
         for (let j = 0; j < initialBoardState[i].length; j++) {
-            if (initialBoardState[i][j] !== finalBoardState[i][j]) {
+            if (currentState[i][j] !== finalBoardState[i][j]) {
                 alert("You didn't match the final state.");
                 return;
             }
         }
     }
     alert("Congratulations! You've matched the final state.");
+}
+
+function deepCopy(array) {
+    return JSON.parse(JSON.stringify(array));
 }

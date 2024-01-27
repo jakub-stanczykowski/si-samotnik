@@ -1,0 +1,33 @@
+#peg-solitaire-board {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.row {
+    clear: both;
+    display: flex;
+    justify-content: center;
+}
+
+.peg-hole {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    margin: 5px;
+    box-shadow: 0 0 5px #000;
+}
+
+.peg-hole.peg {
+    background-color: green;
+}
+
+#move-input {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#move-text {
+    margin: 0 auto;
+    display: block;
+}

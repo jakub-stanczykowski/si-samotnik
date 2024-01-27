@@ -1,10 +1,18 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #peg-solitaire-board {
-    text-align: center;
-    margin-top: 50px;
+    margin-bottom: 20px;
 }
 
 .row {
-    clear: both;
     display: flex;
     justify-content: center;
 }
@@ -13,21 +21,48 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: white;
     margin: 5px;
-    box-shadow: 0 0 5px #000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    transition: background-color 0.3s;
 }
 
-.peg-hole.peg {
-    background-color: green;
+.peg {
+    background-color: #4CAF50; /* Green */
 }
 
-#move-input {
-    text-align: center;
-    margin-top: 20px;
+.peg-hole:not(.peg) {
+    background-color: #fff; /* White */
 }
 
-#move-text {
-    margin: 0 auto;
-    display: block;
+textarea, input, button {
+    font-family: inherit;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+textarea {
+    width: calc(100% - 24px); /* accounting for padding and border */
+    resize: vertical;
+}
+
+input[type="number"] {
+    width: 200px;
+}
+
+button {
+    background-color: #008CBA; /* Blue */
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover {
+    background-color: #005f73;
+}
+
+label {
+    margin-right: 10px;
 }

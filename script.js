@@ -1,17 +1,6 @@
-let initialBoardState = [];
-let finalBoardState = [];
 
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('initialPegs.json')
-        .then(response => response.json())
-        .then(data => {
-            initialBoardState = data.rows;
-            setupBoard(initialBoardState);
-        });
-
-    fetch('finalPegs.json')
-        .then(response => response.json())
-        .then(data => finalBoardState = data.rows);
+    setupBoard(initialBoardState);
 
     document.getElementById('run-button').addEventListener('click', processCommands);
     document.getElementById('reset-button').addEventListener('click', resetBoard);
@@ -20,33 +9,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function setupBoard(rows) {
     const board = document.getElementById('peg-solitaire-board');
-    board.innerHTML = '';
+    board.innerHTML = ''; // Clear existing board
 
     rows.forEach((row, rowIndex) => {
         const rowDiv = document.createElement('div');
         rowDiv.className = 'row';
 
-        row.forEach(peg => {
+        row.forEach((peg, pegIndex) => {
             const pegDiv = document.createElement('div');
             pegDiv.className = 'peg-hole';
             if (peg === 1) {
                 pegDiv.classList.add('peg');
             }
+
+
+            const posText = document.createElement('span');
+            posText.textContent = `p${rowIndex + 1}${pegIndex + 1}`;
+            posText.className = 'peg-text';
+
+            pegDiv.appendChild(posText);
             rowDiv.appendChild(pegDiv);
         });
 
         board.appendChild(rowDiv);
     });
-    console.log(initialBoardState[4][2]);
 }
 
+
 function resetBoard() {
-    fetch('initialPegs.json')
-        .then(response => response.json())
-        .then(data => {
-            initialBoardState = data.rows;
-            setupBoard(initialBoardState);
-        });
+    setupBoard(initialBoardState);
 }
 
 function processCommands() {

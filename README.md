@@ -6,13 +6,7 @@ This project serves as an emulator for executing plans generated from PDDL (Plan
 
 ## Customizing PDDL Problems
 
-To accommodate different PDDL problems, you can modify the `initialPegs.json` and `finalPegs.json` files to represent various initial and goal states of the Peg Solitaire board. This flexibility enables the visualization of a wide range of PDDL-generated solutions.
-
-- **Initial State (`initialPegs.json`)**: Defines the starting configuration of the pegs on the board. Modify this file to set up different initial scenarios according to your PDDL problem's requirements.
-
-- **Goal State (`finalPegs.json`)**: Represents the desired final configuration of the board to achieve with the PDDL plan. Adjust this file to match the goal state of your specific PDDL problem.
-
-By customizing these files, users can explore and validate the effectiveness of PDDL plans across various problem setups, enhancing the understanding of PDDL strategies and their applications in game solving.
+To accommodate different PDDL problems, you can modify the `boardstate.js` file to represent various initial and goal states of the Peg Solitaire board. This flexibility enables the visualization of a wide range of PDDL-generated solutions.
 
 ## Features
 

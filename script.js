@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('initialPegs.json')
         .then(response => response.json())
         .then(data => {
-            initialBoardState = data.rows; // Save the initial state
+            initialBoardState = data.rows;
             setupBoard(initialBoardState);
         });
 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function setupBoard(rows) {
     const board = document.getElementById('peg-solitaire-board');
-    board.innerHTML = ''; // Clear existing board
+    board.innerHTML = '';
 
     rows.forEach((row, rowIndex) => {
         const rowDiv = document.createElement('div');
@@ -41,7 +41,6 @@ function setupBoard(rows) {
 }
 
 function resetBoard() {
-    // Fetch the initial board state again and reset the board
     fetch('initialPegs.json')
         .then(response => response.json())
         .then(data => {
@@ -50,7 +49,6 @@ function resetBoard() {
         });
 }
 
-// Modify processCommands to no longer auto-run on textarea change
 function processCommands() {
     const commands = document.getElementById('move-text').value.split('\n');
     const delay = parseInt(document.getElementById('delay-input').value) || 500;
@@ -64,7 +62,7 @@ function processCommands() {
                 setTimeout(resolve, delay);
             });
         });
-    }, Promise.resolve()).then(compareFinalState); // Compare the final state after all commands
+    }, Promise.resolve()).then(compareFinalState);
 }
 
 
@@ -87,13 +85,11 @@ function executeCommand(command) {
 }
 
 function isValidMove(startX, startY, pegToDeleteX, pegToDeleteY, endX, endY) {
-    // Check if indices are within the bounds of the board
     if (!isIndexValid(startX, startY) || !isIndexValid(pegToDeleteX, pegToDeleteY) || !isIndexValid(endX, endY)) {
         console.log("Index not valid");
         return false;
     }
 
-    // Check if the starting peg exists, the peg to delete exists, and the ending position is empty
     if (initialBoardState[startX - 1][startY - 1] !== 1 ||
         initialBoardState[pegToDeleteX - 1][pegToDeleteY - 1] !== 1 ||
         initialBoardState[endX - 1][endY - 1] !== 0) {
@@ -101,30 +97,24 @@ function isValidMove(startX, startY, pegToDeleteX, pegToDeleteY, endX, endY) {
         return false;
     }
 
-    // Check if all pegs are in a straight line
+
     return isInStraightLine(startX, startY, pegToDeleteX, pegToDeleteY, endX, endY);
 }
 
 function isInStraightLine(startX, startY, pegToDeleteX, pegToDeleteY, endX, endY) {
-    // Vertical line check (Y coordinates are the same)
     if (startY === pegToDeleteY && pegToDeleteY === endY) {
-        // Check if the X coordinates (rows) are consecutive
         return Math.abs(startX - endX) === 2 && Math.abs(startX - pegToDeleteX) === 1;
     }
 
-    // Horizontal line check (X coordinates are the same)
     if (startX === pegToDeleteX && pegToDeleteX === endX) {
         return Math.abs(startY - endY) === 2 && Math.abs(startY - pegToDeleteY) === 1;
     }
 
-    // Diagonal line check (for triangular board)
-    // Check if the pegs are aligned diagonally
     if (Math.abs(startX - endX) === 2 && Math.abs(startY - endY) === 2) {
-        // Ensure the middle peg is actually between the start and end pegs
         return pegToDeleteX === (startX + endX) / 2 && pegToDeleteY === (startY + endY) / 2;
     }
 
-    return false; // Return false if none of the above conditions are met
+    return false;
 }
 
 
@@ -135,14 +125,11 @@ function isIndexValid(x, y) {
 }
 
 function makeMove(startX, startY, pegToDeleteX, pegToDeleteY, endX, endY) {
-    // Setting the starting peg and the peg to delete to empty (0)
     initialBoardState[startX - 1][startY - 1] = 0;
     initialBoardState[pegToDeleteX - 1][pegToDeleteY - 1] = 0;
 
-    // Setting the ending position to have a peg (1)
     initialBoardState[endX - 1][endY - 1] = 1;
 
-    // Re-render the board to reflect the changes
     setupBoard(initialBoardState);
 }
 

@@ -27,11 +27,11 @@ body {
 }
 
 .peg {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
 }
 
 .peg-hole:not(.peg) {
-    background-color: #fff; /* White */
+    background-color: #fff;
 }
 
 textarea, input, button {
@@ -44,7 +44,7 @@ textarea, input, button {
 }
 
 textarea {
-    width: calc(100% - 24px); /* accounting for padding and border */
+    width: calc(100% - 24px);
     resize: vertical;
 }
 
@@ -53,7 +53,7 @@ input[type="number"] {
 }
 
 button {
-    background-color: #008CBA; /* Blue */
+    background-color: #008CBA;
     color: white;
     cursor: pointer;
     border: none;
